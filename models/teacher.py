@@ -2,6 +2,8 @@ from extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class Teacher(db.Model):
+    """Represents a teacher with secure password handling."""
+
     __tablename__ = 'teachers'
 
     id = db.Column(db.Integer, primary_key=True)

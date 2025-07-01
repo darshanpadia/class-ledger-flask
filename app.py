@@ -15,7 +15,7 @@ def create_app():
     migrate.init_app(app,db)
     csrf.init_app(app)
 
-    # Import models *after* db is initialized
+    # Import models *after* db is initialized to avoid circular imports
     from models import Teacher, StudentRecord
 
     register_routes(app)

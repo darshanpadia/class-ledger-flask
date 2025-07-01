@@ -7,6 +7,7 @@ dashboard_routes = Blueprint('dashboard_routes', __name__)
 
 @dashboard_routes.route('/home')
 def home():
+    """Render dashboard with student records and forms."""
     if 'teacher_id' not in session:
         return redirect(url_for('auth_routes.teacher_login'))
     student_records = fetch_all_student_records()
@@ -19,6 +20,7 @@ def home():
 
 @dashboard_routes.route('/add_student', methods=['POST'])
 def add_student_record():
+    """Handle new student record creation."""
     form = CreateStudentRecordForm()
 
     if form.validate_on_submit():
@@ -38,6 +40,7 @@ def add_student_record():
 
 @dashboard_routes.route('/delete/<int:record_id>', methods=['POST'])
 def delete_student_record(record_id):
+    """Handle deletion of a student record."""
     if 'teacher_id' not in session:
         return redirect(url_for('auth_routes.teacher_login'))
     
@@ -47,6 +50,7 @@ def delete_student_record(record_id):
 
 @dashboard_routes.route('/edit/<int:record_id>', methods=['POST'])
 def edit_student_record(record_id):
+    """Handle updating an existing student record."""
     name = request.form['name'].strip()
     subject = request.form['subject'].strip()
     marks = request.form['marks'].strip()

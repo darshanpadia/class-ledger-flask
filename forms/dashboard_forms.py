@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, NumberRange, Length, Regexp
 
 class CreateStudentRecordForm(FlaskForm):
-    """ Create New Entry for a Student Record """
+    """Form to add a new student record with name, subject, and marks."""
     student_name = StringField(
         'Name',
         validators=[

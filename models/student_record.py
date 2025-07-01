@@ -1,6 +1,8 @@
 from extensions import db
 
 class StudentRecord(db.Model):
+    """Represents a student's academic record maintained by a teacher."""
+    
     __tablename__ = "student_records"
 
     id = db.Column(db.Integer, primary_key=True)

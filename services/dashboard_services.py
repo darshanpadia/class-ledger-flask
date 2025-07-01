@@ -1,14 +1,20 @@
 from repositories.student_record_repo import (
     find_duplicate_record, insert_student_record, update_student_record, fetch_all_student_records,
-    delete_student_record_by_id, fetch_student_by_id, update_student_record_by_id
+    delete_student_record_by_id, fetch_student_by_id
 )
 from repositories.edit_log_repo import create_edit_log
 from repositories.teacher_repo import fetch_teacher_by_id
 
 def fetch_all_student_record_service():
+    """
+    Return all student records from the database.
+    """
     return fetch_all_student_records
 
 def add_student_record_service(student_name, subject, marks, teacher_id):
+    """
+    Add a new student record or merge with an existing one if duplicate found.
+    """
     existing = find_duplicate_record(student_name, subject)
 
     if existing:
@@ -30,7 +36,9 @@ def add_student_record_service(student_name, subject, marks, teacher_id):
     }
 
 def delete_student_record_service(record_id):
-    """"""
+    """
+    Delete a student record by ID.
+    """
     success = delete_student_record_by_id(record_id)
     if success:
         return{
@@ -43,7 +51,10 @@ def delete_student_record_service(record_id):
     }
 
 def update_student_record_service(record_id, name, subject, marks, teacher_id):
-    # Validate Inputs
+    """
+    Update an existing student record if valid and authorized.
+    Also logs the update.
+    """
     if not name or not subject or not str(marks).isdigit():
         return{
             "message": "Invalid input",
@@ -74,7 +85,7 @@ def update_student_record_service(record_id, name, subject, marks, teacher_id):
         }
     
     # Update the record
-    update_student_record_by_id(record_id, name, subject, marks)
+    update_student_record(record_id, name, subject, marks)
 
     teacher = fetch_teacher_by_id(teacher_id)
     if teacher:

@@ -4,12 +4,9 @@ from forms import LoginForm
 
 auth_routes = Blueprint('auth_routes', __name__)
 
-# -------------------------------------
-# Route: /login
-# Handles both GET (render login page) and POST (form submission)
-# -------------------------------------
 @auth_routes.route('/login', methods=['POST', 'GET'])
 def teacher_login():
+    """Handle teacher login via form submission."""
     form = LoginForm()
 
     # If form was submitted and passed all validators
@@ -29,13 +26,9 @@ def teacher_login():
     # For GET requests or failed POST, show the login page again
     return render_template('auth_templates/login.html', form=form)
 
-# -------------------------------------
-# Route: /logout
-# Logs out the user (POST only) and clears session
-# Protected with CSRF token via LogoutForm
-# -------------------------------------
 @auth_routes.route('/logout', methods=['POST'])
 def logout():
+    """Clear session and log the user out."""
     session.clear()  # Clear all session data
     flash("You have been logged out.", "info")
     return redirect(url_for('auth_routes.teacher_login'))  # Redirect back to login page
