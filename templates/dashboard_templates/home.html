@@ -49,7 +49,8 @@
                         {% for record in student_records %}
                         <tr id="row-{{ record.id }}">
                             <!-- UPDATE FORM -->
-                            <form method="POST" action="" id="form-{{ record.id }}">
+                            <form method="POST" action="{{ url_for('dashboard_routes.edit_student_record', record_id=record.id) }}" id="form-{{ record.id }}">
+                                {{ create_student_record_form.csrf_token }}
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                                 <td>
                                     <input type="text" name="name" value="{{ record['student_name'] }}"

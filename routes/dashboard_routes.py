@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, url_for, flash, session, redirect
+from flask import Blueprint, render_template, url_for, flash, session, redirect, request
 from forms import ActionForm,CreateStudentRecordForm
-from services.dashboard_services import add_student_record_service, fetch_all_student_records, delete_student_record_service
+from services.dashboard_services import (add_student_record_service, fetch_all_student_records,
+                                        delete_student_record_service, update_student_record_service)
 
 dashboard_routes = Blueprint('dashboard_routes', __name__)
 
@@ -43,3 +44,18 @@ def delete_student_record(record_id):
     result = delete_student_record_service(record_id)
     flash(result["message"], result["category"])
     return redirect(url_for('dashboard_routes.home'))
+
+@dashboard_routes.route('/edit/<int:record_id>', methods=['POST'])
+def edit_student_record(record_id):
+    name = request.form['name'].strip()
+    subject = request.form['subject'].strip()
+    marks = request.form['marks'].strip()
+
+    teacher_id = session.get('teacher_id')
+    if not teacher_id:
+        return redirect(url_for('auth_routes.teacher_login'))
+    
+    result = update_student_record_service(record_id, name, subject, marks, teacher_id)
+    flash(result["message"], result["category"])
+
+    return redirect(url_for("dashboard_routes.home"))

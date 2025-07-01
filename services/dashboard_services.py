@@ -1,6 +1,6 @@
 from repositories.student_record_repo import (
     find_duplicate_record, insert_student_record, update_student_record, fetch_all_student_records,
-    delete_student_record_by_id
+    delete_student_record_by_id, fetch_student_by_id, update_student_record_by_id
 )
 
 def fetch_all_student_record_service():
@@ -38,4 +38,42 @@ def delete_student_record_service(record_id):
     return{
         "message": "Record not found.",
         "category":"error"
+    }
+
+def update_student_record_service(record_id, name, subject, marks, teacher_id):
+    # Validate Inputs
+    if not name or not subject or not str(marks).isdigit():
+        return{
+            "message": "Invalid input",
+            "category":"error"
+        }
+    
+    marks = int(marks)
+    current_record = fetch_student_by_id(record_id)
+    if not current_record:
+        return {
+            "message": "Record not found.",
+            "category": "error"
+        }
+    
+    # Check if the teacher owns the record
+    if current_record.teacher_id != teacher_id:
+        return{
+            "message": "You do not have permission to edit this record.",
+            "category": "error"
+        }
+    
+    # Check for duplicate entry
+    duplicate = find_duplicate_record(name, subject)
+    if duplicate and duplicate.id != record_id:
+        return {
+            "message": "Another record with the same name and subject exists.",
+            "category": "error"
+        }
+    
+    # Update the record
+    update_student_record_by_id(record_id, name, subject, marks)
+    return{
+        "message": "Student record updated successfully.",
+        "category": "success"
     }
