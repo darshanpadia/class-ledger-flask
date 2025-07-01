@@ -63,3 +63,7 @@ def edit_student_record(record_id):
     flash(result["message"], result["category"])
 
     return redirect(url_for("dashboard_routes.home"))
+
+@dashboard_routes.route('/')
+def index():
+    return redirect(url_for('dashboard_routes.home'))
