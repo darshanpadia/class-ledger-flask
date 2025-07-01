@@ -2,6 +2,8 @@ from repositories.student_record_repo import (
     find_duplicate_record, insert_student_record, update_student_record, fetch_all_student_records,
     delete_student_record_by_id, fetch_student_by_id, update_student_record_by_id
 )
+from repositories.edit_log_repo import create_edit_log
+from repositories.teacher_repo import fetch_teacher_by_id
 
 def fetch_all_student_record_service():
     return fetch_all_student_records
@@ -73,6 +75,11 @@ def update_student_record_service(record_id, name, subject, marks, teacher_id):
     
     # Update the record
     update_student_record_by_id(record_id, name, subject, marks)
+
+    teacher = fetch_teacher_by_id(teacher_id)
+    if teacher:
+        create_edit_log(teacher.username, record_id)
+        
     return{
         "message": "Student record updated successfully.",
         "category": "success"
