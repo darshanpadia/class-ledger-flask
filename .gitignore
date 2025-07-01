@@ -1,4 +1,12 @@
 structure.txt
+
+# env
 /venv/
 .env
+
+# cache
 *__pycache__
+
+#database
+*.db
+instance/
