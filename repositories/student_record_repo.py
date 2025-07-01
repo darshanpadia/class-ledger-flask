@@ -2,6 +2,9 @@ from models import StudentRecord
 from sqlalchemy import func
 from extensions import db
 
+def fetch_all_student_records():
+    return StudentRecord.query.all()
+
 def find_duplicate_record(student_name, subject):
     return StudentRecord.query.filter(
         func.lower(StudentRecord.student_name) == student_name.lower(),

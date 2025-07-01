@@ -1,15 +1,19 @@
 from flask import Blueprint, render_template, url_for, flash, session, redirect
 from forms import ActionForm,CreateStudentRecordForm
-from services.dashboard_services import add_student_record_service
+from services.dashboard_services import add_student_record_service, fetch_all_student_records
 
 dashboard_routes = Blueprint('dashboard_routes', __name__)
 
 @dashboard_routes.route('/home')
 def home():
+    if 'teacher_id' not in session:
+        return redirect(url_for('auth_routes.teacher_login'))
+    student_records = fetch_all_student_records()
     logout_form = ActionForm()
     create_student_record_form = CreateStudentRecordForm()
     return render_template('dashboard_templates/home.html', logout_form=logout_form,
-                            create_student_record_form=create_student_record_form
+                            create_student_record_form=create_student_record_form,
+                            student_records=student_records
                             )
 
 @dashboard_routes.route('/add_student', methods=['POST'])

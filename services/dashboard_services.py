@@ -1,6 +1,9 @@
 from repositories.student_record_repo import (
-    find_duplicate_record, insert_student_record, update_student_record
+    find_duplicate_record, insert_student_record, update_student_record, fetch_all_student_records
 )
+
+def fetch_all_student_record_service():
+    return fetch_all_student_records
 
 def add_student_record_service(student_name, subject, marks, teacher_id):
     existing = find_duplicate_record(student_name, subject)

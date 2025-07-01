@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard - Teacher Portal</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
 </head>
 <body>
     <header>
@@ -46,6 +46,43 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for record in student_records %}
+                        <tr id="row-{{ record.id }}">
+                            <!-- UPDATE FORM -->
+                            <form method="POST" action="" id="form-{{ record.id }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                <td>
+                                    <input type="text" name="name" value="{{ record['student_name'] }}"
+                                        readonly class="input-{{ record.id }}"
+                                        required pattern="^[A-Za-z\s]{2,}$" title="Only letters, min 2 characters">
+                                </td>
+                                <td>
+                                    <input type="text" name="subject" value="{{ record['subject'] }}"
+                                        readonly class="input-{{ record.id }}" required>
+                                </td>
+                                <td>
+                                    <input type="number" name="marks" value="{{ record['marks'] }}"
+                                        readonly class="input-{{ record.id }}" min="0" max="100" required>
+                                </td>
+                                <td class="actions-cell" id="action-cell-{{ record.id }}">
+                                    <!-- Edit / Update / Cancel buttons -->
+                                    <button type="button" onclick="enableEdit({{ record.id }})" id="edit-btn-{{ record.id }}">Edit</button>
+                                    <button type="submit" id="update-btn-{{ record.id }}" style="display:none;">Update</button>
+                                    <button type="button" onclick="cancelEdit({{ record.id }})" id="cancel-btn-{{ record.id }}" style="display:none;">Cancel</button>
+                                </td>
+                            </form>
+
+                            <!-- DELETE FORM outside of update form -->
+                            <td>
+                                <form method="POST" action="" style="display:inline;">
+                                    {{ logout_form.csrf_token }}
+                                    <button type="submit" onclick="return confirm('Delete this student?')" id="delete-btn-{{ record.id }}">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             {% else %}
