@@ -18,45 +18,7 @@ A scalable and structured Flask web application for managing student records per
 
 ## 🗂️ Project Structure
 
-class-ledger-flask/
-├── app.py # App factory
-├── wsgi.py # Entry point
-├── .env-sample # Sample environment variables
-├── requirements.txt # Dependencies
-│
-├── models/ # SQLAlchemy models (Teacher, StudentRecord, EditLog)
-│ ├── init.py
-│ ├── teacher.py
-│ ├── student_record.py
-│ └── edit_log.py
-│
-├── routes/ # Blueprint-based routes
-│ ├── init.py
-│ ├── auth_routes.py
-│ └── dashboard_routes.py
-│
-├── services/ # Business logic layer
-│ ├── auth_services.py
-│ ├── dashboard_services.py
-│ └── teacher_services.py
-│
-├── repositories/ # DB access layer
-│ ├── teacher_repo.py
-│ ├── student_record_repo.py
-│ └── edit_log_repo.py
-│
-├── templates/ # Jinja2 templates
-│ ├── auth_templates/
-│ └── dashboard_templates/
-│
-├── forms/ # Flask-WTF forms
-│ ├── init.py
-│ ├── auth_forms.py
-│ ├── dashboard_forms.py
-│ └── common_forms.py
-│
-├── extensions.py # Initialized Flask extensions (DB, CSRF, Migrate)
-└── config.py # Config classes for Flask
+<pre lang="nohighlight"><code>## 🗂️ Project Structure <code>class-ledger-flask/ ├── app.py # App factory ├── wsgi.py # Entry point ├── .env-sample # Sample environment variables ├── requirements.txt # Dependencies │ ├── models/ # SQLAlchemy models │ ├── __init__.py │ ├── teacher.py │ ├── student_record.py │ └── edit_log.py │ ├── routes/ # Blueprint-based routes │ ├── __init__.py │ ├── auth_routes.py │ └── dashboard_routes.py │ ├── services/ # Business logic layer │ ├── auth_services.py │ ├── dashboard_services.py │ └── teacher_services.py │ ├── repositories/ # DB access layer │ ├── teacher_repo.py │ ├── student_record_repo.py │ └── edit_log_repo.py │ ├── templates/ # Jinja2 templates │ ├── auth_templates/ │ └── dashboard_templates/ │ ├── forms/ # Flask-WTF forms │ ├── __init__.py │ ├── auth_forms.py │ ├── dashboard_forms.py │ └── common_forms.py │ ├── extensions.py # Flask extensions (DB, CSRF, Migrate) └── config.py # App configuration </code></pre>
 
 
 ---
@@ -94,7 +56,7 @@ class-ledger-flask/
      ren .env-sample .env  # Windows CMD/PowerShell
      or manually
      ```
-     
+
 5. **Start the application**
      - **Windows**:
        ```bash
@@ -121,7 +83,6 @@ Sample Teacher Credentials for testing
 | teacher1 | pass123  |
 | teacher2 | pass123  |
 
-pass123
 
 📦 Tech Stack
 Python 3.x
