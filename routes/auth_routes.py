@@ -22,10 +22,20 @@ def teacher_login():
         if teacher:
             # Store teacher ID in session to track login
             session['teacher_id'] = teacher.id
-            return redirect(url_for('home'))
+            return redirect(url_for('dashboard_routes.home'))
         else:
             flash("Invalid username or password.", "error")  
 
     # For GET requests or failed POST, show the login page again
     return render_template('auth_templates/login.html', form=form)
 
+# -------------------------------------
+# Route: /logout
+# Logs out the user (POST only) and clears session
+# Protected with CSRF token via LogoutForm
+# -------------------------------------
+@auth_routes.route('/logout', methods=['POST'])
+def logout():
+    session.clear()  # Clear all session data
+    flash("You have been logged out.", "info")
+    return redirect(url_for('auth_routes.teacher_login'))  # Redirect back to login page

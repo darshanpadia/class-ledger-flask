@@ -16,7 +16,7 @@ def create_app():
     csrf.init_app(app)
 
     # Import models *after* db is initialized
-    from models import Teacher
+    from models import Teacher, StudentRecord
 
     register_routes(app)
 
