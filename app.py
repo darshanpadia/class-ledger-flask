@@ -16,12 +16,12 @@ def create_app():
     csrf.init_app(app)
 
     # Import models *after* db is initialized to avoid circular imports
-    from models import Teacher, StudentRecord
+    from models import Teacher, StudentRecord, EditLog
 
     register_routes(app)
 
     with app.app_context():
-        # Add default teachers for testing
-        add_default_teachers()
+        db.create_all()         # Creates all the db tables
+        add_default_teachers()  # Add default teachers for testing
 
     return app
