@@ -13,7 +13,7 @@
             <a href="{{ url_for('dashboard_routes.home') }}">Home</a>
             {% if session.get('teacher_id') %}
                 <form action="{{ url_for('auth_routes.logout') }}" method="post">
-                    {{ logout_form.csrf_token() }}
+                    {{ action_form.csrf_token() }}
                     <input type="submit" value="Logout">
                 </form>
             {% else %}
@@ -74,8 +74,8 @@
 
                             <!-- DELETE FORM outside of update form -->
                             <td>
-                                <form method="POST" action="" style="display:inline;">
-                                    {{ logout_form.csrf_token }}
+                                <form method="POST" action="{{ url_for('dashboard_routes.delete_student_record', record_id=record.id) }}" style="display:inline;">
+                                    {{ action_form.csrf_token }}
                                     <button type="submit" onclick="return confirm('Delete this student?')" id="delete-btn-{{ record.id }}">
                                         Delete
                                     </button>

@@ -1,5 +1,6 @@
 from repositories.student_record_repo import (
-    find_duplicate_record, insert_student_record, update_student_record, fetch_all_student_records
+    find_duplicate_record, insert_student_record, update_student_record, fetch_all_student_records,
+    delete_student_record_by_id
 )
 
 def fetch_all_student_record_service():
@@ -24,4 +25,17 @@ def add_student_record_service(student_name, subject, marks, teacher_id):
     return {
         "message": "Student record successfully added",
         "category" : "success"
+    }
+
+def delete_student_record_service(record_id):
+    """"""
+    success = delete_student_record_by_id(record_id)
+    if success:
+        return{
+            "message": "Student record deleted.",
+            "category": "info"
+        }
+    return{
+        "message": "Record not found.",
+        "category":"error"
     }

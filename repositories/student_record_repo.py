@@ -28,3 +28,12 @@ def update_student_record(record_id, name, subject, marks):
         record.subject = subject
         record.marks = marks
         db.session.commit()
+
+def delete_student_record_by_id(record_id):
+    """Delete a student record by ID."""
+    record = StudentRecord.query.get(record_id)
+    if record:
+        db.session.delete(record)
+        db.session.commit()
+        return True
+    return False
